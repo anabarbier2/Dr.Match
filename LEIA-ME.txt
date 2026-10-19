@@ -1,0 +1,39 @@
+PROJETO DE CADASTRO DE MEDICOS - DJANGO
+
+ESTRUTURA BASEADA NO PROJETO taxi.zip DO PROFESSOR.
+
+1. Abra esta pasta no Visual Studio Code.
+2. Abra Terminal > New Terminal.
+3. Crie o ambiente virtual:
+   python -m venv venv
+4. Ative no PowerShell:
+   .\venv\Scripts\Activate.ps1
+   Se houver bloqueio de política no PowerShell, use o terminal CMD e execute:
+   venv\Scripts\activate.bat
+5. Instale as dependências:
+   python -m pip install -r requirements.txt
+6. Crie as migrações e o banco:
+   python manage.py makemigrations app
+   python manage.py migrate
+7. Inicie o servidor:
+   python manage.py runserver
+
+API (JSON):
+GET    http://127.0.0.1:8000/app/medicos/
+GET    http://127.0.0.1:8000/app/medicos/1/
+POST   http://127.0.0.1:8000/app/medicos/
+PUT    http://127.0.0.1:8000/app/medicos/1/
+DELETE http://127.0.0.1:8000/app/medicos/1/
+GET    http://127.0.0.1:8000/app/csrftoken/
+
+POST/PUT recebem JSON com os campos:
+{
+  "nome": "Ana Silva",
+  "crm": "12345-MS",
+  "especialidade": "Cardiologia",
+  "telefone": "67999990000",
+  "email": "ana@example.com",
+  "convenio": "Particular"
+}
+
+Observação: esta entrega contém a API/backend. As páginas HTML/CSS do Figma ainda precisam ser integradas ao frontend.
