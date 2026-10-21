@@ -17,6 +17,15 @@ ESTRUTURA BASEADA NO PROJETO taxi.zip DO PROFESSOR.
    python manage.py migrate
 7. Inicie o servidor:
    python manage.py runserver
+8. Baixe o Thunder client e faça:
+   GET http://127.0.0.1:8000/csrf/ *para pegar o token*, aperte send e vá em Headers de onde aparece o resultado e copie o token até o primeiro ";"
+9. Abra outra request e faça:
+   POST http://127.0.0.1:8000/medicos/ e no Headers coloque nessa ordem:
+   Header:              value:
+   X-CSRFToken          O token completo copiado
+   Cookie               csrftoken=TOKEN_COMPLETO
+   Content-Type         application/json
+10. Abra no navegador a url http://127.0.0.1:8000/cadastro/ , faça um cadastro e se der certo a api conectou
 
 API (JSON):
 GET    http://127.0.0.1:8000/app/medicos/

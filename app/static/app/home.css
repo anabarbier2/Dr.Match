@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+
+:root{--navy:#0d203d;--navy-2:#143b62;--blue:#5e83ad;--sky:#68b8f4;--yellow:#ffc83d;--yellow-hover:#f2b91e;--line:#d6e2ef;--white:#fff;--soft:#f5f8fc}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;color:var(--navy);font-family:'DM Sans',Arial,sans-serif;background:#fff}
+a{color:inherit;text-decoration:none}
+button,a{-webkit-tap-highlight-color:transparent}
+.site-header{height:68px;background:rgba(255,255,255,.97);border-bottom:1px solid #edf1f5;position:sticky;top:0;z-index:20}
+.nav-wrap{height:100%;max-width:1140px;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:inline-flex;align-items:center;gap:12px;font-family:'Playfair Display',Georgia,serif;font-size:21px;white-space:nowrap}
+.brand-mark{width:30px;height:30px;display:grid;place-items:center;color:var(--yellow);font-family:Arial,sans-serif;font-size:24px;text-shadow:1px 1px 0 var(--navy)}
+.main-nav,.header-actions{display:flex;align-items:center;gap:32px;font-size:14px}
+.main-nav a{color:#5f7fa3;font-weight:600;transition:color .2s}
+.main-nav a:hover,.search-link:hover{color:var(--navy)}
+.header-actions{gap:16px}
+.search-link{font-weight:500}
+.button{min-height:50px;padding:0 23px;display:inline-flex;justify-content:center;align-items:center;gap:8px;border-radius:12px;font:600 15px 'DM Sans',sans-serif;border:1px solid transparent;transition:transform .18s,background .18s,box-shadow .18s;cursor:pointer}
+.button:hover{transform:translateY(-1px)}
+.button-yellow{background:var(--yellow);color:#071a34;box-shadow:0 5px 12px rgba(13,32,61,.08)}
+.button-yellow:hover{background:var(--yellow-hover)}
+.button-small{min-height:38px;padding:0 17px;border-radius:9px;font-size:14px}
+.button-outline{border-color:var(--line);background:#fff;color:var(--navy)}
+.button-outline:hover{background:var(--soft)}
+.menu-toggle{display:none;background:none;border:0;font-size:25px;color:var(--navy)}
+.section-shell{width:min(1108px,calc(100% - 44px));margin-inline:auto}
+.hero{min-height:600px;padding-top:75px;padding-bottom:75px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px}
+.hero-copy{padding:0 0 8px}
+.eyebrow-pill{display:inline-flex;align-items:center;gap:9px;padding:8px 14px;border:1px solid #ffc83d;border-radius:30px;background:#fff8df;font-size:12px;font-weight:700;margin-bottom:25px}
+.dot{width:7px;height:7px;background:var(--yellow);border-radius:50%}
+h1,h2{font-family:'Playfair Display',Georgia,serif;font-weight:500;letter-spacing:-.6px}
+.hero h1{font-size:clamp(42px,4.2vw,62px);line-height:1.04;margin:0 0 26px}
+.hero h1 em{font-weight:500;color:#173d68}
+.hero-description{font-size:18px;line-height:1.65;color:var(--blue);max-width:480px;margin:0 0 28px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-note{margin-top:21px;color:#6c89a9;font-size:12px}
+.hero-note span{color:#dca900;font-weight:700;margin-right:5px}
+.hero-visual{position:relative;min-width:0}
+.doctor-photo{display:block;width:100%;height:395px;object-fit:cover;object-position:center 35%;border-radius:17px;background:#dbe4ed}
+.doctor-card{position:absolute;left:16px;right:16px;bottom:16px;min-height:80px;padding:13px 16px;display:flex;align-items:center;gap:12px;background:#fff;border-radius:12px;box-shadow:0 12px 35px #081b3030}
+.doctor-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover}
+.doctor-details{display:flex;flex-direction:column;gap:4px;min-width:0}
+.doctor-details strong{font-size:13px}
+.doctor-details span,.next-appointment span{font-size:11px;color:var(--blue)}
+.next-appointment{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:3px;white-space:nowrap}
+.next-appointment strong{font-size:13px}
+.floating-badge{position:absolute;right:-17px;top:25px;background:white;box-shadow:0 8px 30px #0d203d15;border-radius:12px;padding:12px 15px;display:flex;align-items:center;gap:10px;font-size:12px}
+.badge-check{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#fff1bd;color:#9b7400;font-weight:700}
+.floating-badge span:last-child{display:flex;flex-direction:column;gap:4px}
+.floating-badge small{color:var(--blue)}
+.how-section{background:var(--navy);color:#fff;padding:95px 0 100px}
+.section-kicker{display:block;color:var(--yellow);font-size:14px;font-weight:700;letter-spacing:1.1px;margin-bottom:14px}
+.how-section h2,.section-heading h2{font-size:36px;line-height:1.2;margin:0}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:55px;margin-top:62px}
+.step-number{font-family:'Playfair Display',Georgia,serif;font-size:62px;color:#32618f;line-height:1}
+.step-card h3{font-size:19px;margin:20px 0 10px}
+.step-card p{color:var(--sky);font-size:16px;line-height:1.65;margin:0}
+.plans-section{padding:95px 0 88px}
+.centered{text-align:center}
+.dark-kicker{color:#1a4d7a}
+.section-heading>p{color:var(--blue);font-size:16px;margin:20px 0 0}
+.plans-grid{max-width:770px;margin:62px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+.plan-card{position:relative;border:1px solid var(--line);border-radius:17px;padding:32px;min-height:500px;display:flex;flex-direction:column;background:#fff}
+.plan-card h3{font-size:20px;margin:0 0 6px}
+.plan-description{color:var(--blue);font-size:14px;line-height:1.5;min-height:42px;margin:0}
+.price{font-family:'Playfair Display',Georgia,serif;font-size:46px;line-height:1.1;margin:22px 0}
+.price span{font-family:'DM Sans',Arial,sans-serif;font-size:14px;color:var(--blue)}
+.plan-card ul{list-style:none;padding:0;margin:0 0 28px;display:grid;gap:13px;color:var(--blue);font-size:14px}
+.plan-card li:before{content:'✓';color:#e7a900;font-weight:700;margin-right:12px}
+.plan-button{width:100%;margin-top:auto;min-height:46px;font-size:14px}
+.featured{background:var(--navy);color:#fff;border-color:var(--navy);padding-top:55px}
+.featured .plan-description,.featured .price span,.featured ul{color:var(--sky)}
+.popular-label{position:absolute;top:25px;left:32px;border-radius:20px;background:var(--yellow);color:var(--navy);font-size:11px;font-weight:700;padding:5px 11px}
+.pricing-note{text-align:center;color:#8095ad;font-size:11px;max-width:700px;margin:22px auto 0;line-height:1.5}
+.cta-section{background:var(--navy-2);padding:90px 0 96px;color:#fff;text-align:center}
+.cta-content h2{font-size:clamp(34px,4vw,48px);margin:0 0 16px}
+.cta-content p{font-size:18px;line-height:1.6;color:var(--sky);max-width:460px;margin:0 auto 30px}
+.site-footer{background:#0a1b34;color:#fff;padding:29px 0}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.footer-brand{font-size:17px}
+.footer-brand .brand-mark{font-size:21px}
+.footer-inner p{color:#5f91c4;font-size:13px;text-align:center}
+.footer-inner nav{display:flex;gap:25px;color:#5f91c4;font-size:13px}
+.footer-inner nav a:hover{color:white}
+@media(max-width:850px){.nav-wrap{gap:12px}.main-nav{gap:16px}.header-actions{gap:10px}.hero{gap:32px;min-height:auto;padding-top:65px;padding-bottom:70px}.hero h1{font-size:clamp(40px,6vw,54px)}.hero-description{font-size:16px}.doctor-photo{height:350px}.floating-badge{right:-7px}.steps-grid{gap:28px}.step-card p{font-size:14px}.plan-card{padding:25px}.featured{padding-top:55px}.popular-label{left:25px}.footer-inner{flex-wrap:wrap}.footer-inner p{order:3;width:100%;margin:0}}
+@media(max-width:640px){.site-header{height:62px}.nav-wrap{padding:0 18px}.brand{font-size:19px}.menu-toggle{display:block;margin-left:auto}.main-nav{display:none;position:absolute;top:61px;left:0;right:0;background:white;border-bottom:1px solid var(--line);padding:20px;flex-direction:column;align-items:flex-start;gap:18px}.main-nav.open{display:flex}.header-actions .search-link{display:none}.header-actions{margin-left:0}.button-small{padding:0 12px;font-size:12px;min-height:36px}.hero{grid-template-columns:1fr;padding-top:48px;gap:38px}.hero h1{font-size:clamp(42px,11vw,58px)}.hero-description{font-size:16px}.hero-actions{display:grid;grid-template-columns:1fr}.hero-actions .button{width:100%}.hero-visual{margin:0 5px}.doctor-photo{height:330px}.floating-badge{top:12px;right:-4px;padding:9px 10px}.doctor-card{left:10px;right:10px;bottom:10px;padding:10px;gap:8px}.doctor-avatar{width:40px;height:40px}.doctor-details strong,.next-appointment strong{font-size:11px}.doctor-details span,.next-appointment span{font-size:9px}.how-section,.plans-section{padding:68px 0}.how-section h2,.section-heading h2{font-size:30px}.steps-grid{grid-template-columns:1fr;gap:34px;margin-top:42px}.step-number{font-size:52px}.step-card h3{margin-top:12px}.step-card p{font-size:15px}.plans-grid{grid-template-columns:1fr;max-width:420px;margin-top:38px;gap:18px}.plan-card{min-height:0;padding:28px}.featured{padding-top:60px}.popular-label{left:28px}.price{font-size:42px}.cta-section{padding:68px 0}.cta-content h2{font-size:34px}.cta-content p{font-size:16px}.footer-inner{justify-content:center;text-align:center}.footer-inner p{order:0}.footer-inner nav{width:100%;justify-content:center;gap:18px}.footer-brand{width:100%;justify-content:center}}

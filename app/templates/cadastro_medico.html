@@ -1,180 +1,220 @@
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
+    {% load static %}
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Médicos</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    <title>Cadastro médico | Dr.Match</title>
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f1f4f9;
-            margin: 0;
-            padding: 30px 15px;
-            color: #16294d;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px #00000012;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .descricao {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-top: 16px;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        input:focus {
-            outline: 2px solid #16294d;
-        }
-
-        button {
-            width: 100%;
-            padding: 13px;
-            margin-top: 25px;
-            border: none;
-            border-radius: 6px;
-            background: #16294d;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:disabled {
-            opacity: 0.6;
-            cursor: wait;
-        }
-
-        #mensagem {
-            margin-top: 18px;
-            text-align: center;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'app/cadastro_medico.css' %}">
+    <script src="{% static 'app/cadastro_medico.js' %}" defer></script>
 </head>
-
 <body>
-    <main class="container">
-        <h1>Cadastro de Médicos</h1>
-        <p class="descricao">
-            Preencha os dados para realizar seu cadastro.
-        </p>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Dr.Match página inicial">
+      <span class="brand-icon" aria-hidden="true">✚</span>
+      <span>Dr.Match</span>
+    </a>
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="#">Encontrar Médico</a>
+      <a href="#">Para Médicos</a>
+    </nav>
+    <div class="header-actions">
+      <a class="search-link" href="#">Buscar médico</a>
+      <a class="header-button" href="{% url 'pagina_cadastro' %}">Cadastrar-se</a>
+    </div>
+  </header>
 
-        <form id="formCadastro">
-            <label for="nome">Nome completo</label>
-            <input id="nome" name="nome" maxlength="100" required>
+  <main class="page">
+    <a class="back-link" href="/">← Voltar</a>
 
-            <label for="crm">CRM</label>
-            <input id="crm" name="crm" maxlength="20" required>
+    <section id="cadastroView">
+      <div class="page-heading">
+        <h1>Cadastro médico</h1>
+        <p>Preencha os dados para criar seu perfil na plataforma</p>
+      </div>
 
-            <label for="especialidade">Especialidade</label>
-            <input id="especialidade" name="especialidade"
-                   maxlength="100" required>
+      <ol class="steps" aria-label="Etapas do cadastro">
+        <li class="step active" data-step-indicator="1"><span>1</span><b>Dados pessoais</b></li>
+        <li class="step" data-step-indicator="2"><span>2</span><b>Atendimento</b></li>
+        <li class="step" data-step-indicator="3"><span>3</span><b>Plano</b></li>
+      </ol>
 
-            <label for="telefone">Telefone</label>
-            <input id="telefone" name="telefone" type="tel"
-                   maxlength="20" required>
+      <form id="formCadastro" class="form-card" novalidate>
+        {% csrf_token %}
 
-            <label for="email">E-mail</label>
-            <input id="email" name="email" type="email" required>
+        <section class="form-step active" data-step="1">
+          <h2>Informações pessoais e profissionais</h2>
 
-            <label for="convenio">Convênio aceito</label>
-            <input id="convenio" name="convenio" maxlength="100">
+          <div class="field">
+            <label for="nome">Nome completo <span>*</span></label>
+            <input id="nome" name="nome" type="text" maxlength="100"
+                   placeholder="Dr. / Dra. Nome Sobrenome" autocomplete="name" required>
+          </div>
 
-            <button type="submit" id="botaoCadastrar">
-                Cadastrar médico
-            </button>
+          <div class="field-grid crm-grid">
+            <div class="field">
+              <label for="crm">CRM <span>*</span></label>
+              <input id="crm" name="crm" type="text" maxlength="20"
+                     placeholder="123456" required>
+            </div>
+            <div class="field">
+              <label for="estado_crm">Estado CRM</label>
+              <select id="estado_crm" name="estado_crm">
+                <option value="SP">SP</option><option value="AC">AC</option>
+                <option value="AL">AL</option><option value="AP">AP</option>
+                <option value="AM">AM</option><option value="BA">BA</option>
+                <option value="CE">CE</option><option value="DF">DF</option>
+                <option value="ES">ES</option><option value="GO">GO</option>
+                <option value="MA">MA</option><option value="MT">MT</option>
+                <option value="MS">MS</option><option value="MG">MG</option>
+                <option value="PA">PA</option><option value="PB">PB</option>
+                <option value="PR">PR</option><option value="PE">PE</option>
+                <option value="PI">PI</option><option value="RJ">RJ</option>
+                <option value="RN">RN</option><option value="RS">RS</option>
+                <option value="RO">RO</option><option value="RR">RR</option>
+                <option value="SC">SC</option><option value="SE">SE</option>
+                <option value="TO">TO</option>
+              </select>
+            </div>
+          </div>
 
-            <p id="mensagem" role="status" aria-live="polite"></p>
-        </form>
-    </main>
+          <div class="field">
+            <label for="especialidade">Especialidade <span>*</span></label>
+            <select id="especialidade" name="especialidade" required>
+              <option value="">Selecione a especialidade</option>
+              <option>Cardiologia</option><option>Clínica Geral</option>
+              <option>Dermatologia</option><option>Endocrinologia</option>
+              <option>Ginecologia</option><option>Neurologia</option>
+              <option>Oftalmologia</option><option>Ortopedia</option>
+              <option>Pediatria</option><option>Psiquiatria</option>
+              <option>Outra</option>
+            </select>
+          </div>
 
-    <script>
-        const formulario = document.getElementById("formCadastro");
-        const mensagem = document.getElementById("mensagem");
-        const botao = document.getElementById("botaoCadastrar");
+          <div class="field-grid">
+            <div class="field">
+              <label for="email">Email <span>*</span></label>
+              <input id="email" name="email" type="email"
+                     placeholder="seu@email.com" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="telefone">Telefone <span>*</span></label>
+              <input id="telefone" name="telefone" type="tel" maxlength="20"
+                     placeholder="(11) 99999-9999" autocomplete="tel" required>
+            </div>
+          </div>
 
-        formulario.addEventListener("submit", async (evento) => {
-            evento.preventDefault();
+          <div class="field-grid">
+            <div class="field">
+              <label for="cidade">Cidade</label>
+              <input id="cidade" name="cidade" type="text" placeholder="São Paulo">
+            </div>
+            <div class="field">
+              <label for="estado">Estado</label>
+              <select id="estado" name="estado">
+                <option value="">UF</option><option>AC</option><option>AL</option>
+                <option>AP</option><option>AM</option><option>BA</option><option>CE</option>
+                <option>DF</option><option>ES</option><option>GO</option><option>MA</option>
+                <option>MT</option><option>MS</option><option>MG</option><option>PA</option>
+                <option>PB</option><option>PR</option><option>PE</option><option>PI</option>
+                <option>RJ</option><option>RN</option><option>RS</option><option>RO</option>
+                <option>RR</option><option>SC</option><option>SE</option><option>TO</option>
+              </select>
+            </div>
+          </div>
 
-            const dados = Object.fromEntries(
-                new FormData(formulario).entries()
-            );
+          <div class="field">
+            <label for="biografia">Mini-biografia</label>
+            <textarea id="biografia" name="biografia" rows="4"
+              placeholder="Descreva sua experiência, formação e áreas de atuação..."></textarea>
+          </div>
+        </section>
 
-            mensagem.textContent = "";
-            botao.disabled = true;
+        <section class="form-step" data-step="2">
+          <h2>Informações de atendimento</h2>
+          <p class="step-description">Informe como você atende seus pacientes.</p>
 
-            try {
-                const resposta = await fetch("/medicos/", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    credentials: "same-origin",
-                    body: JSON.stringify(dados)
-                });
+          <div class="field">
+            <label for="tipo_atendimento">Modalidade de atendimento</label>
+            <select id="tipo_atendimento" name="tipo_atendimento">
+              <option value="Presencial">Presencial</option>
+              <option value="Online">Online</option>
+              <option value="Presencial e online">Presencial e online</option>
+            </select>
+          </div>
 
-                const resultado = await resposta.json();
+          <div class="field">
+            <label for="convenio">Convênios aceitos</label>
+            <input id="convenio" name="convenio" type="text" maxlength="100"
+              placeholder="Ex.: Unimed, Bradesco Saúde ou particular">
+          </div>
 
-                if (!resposta.ok) {
-                    const erros = resultado.errors || {};
-                    const textos = Object.values(erros)
-                        .flat()
-                        .map(erro => typeof erro === "string"
-                            ? erro
-                            : erro.message);
+          <div class="field">
+            <label for="endereco">Endereço de atendimento</label>
+            <input id="endereco" name="endereco" type="text"
+              placeholder="Rua, número e complemento (opcional)">
+          </div>
 
-                    mensagem.textContent = textos.length
-                        ? textos.join(" ")
-                        : "Não foi possível realizar o cadastro.";
+          <p class="notice">Os dados de atendimento ajudam os pacientes a encontrar um profissional compatível.</p>
+        </section>
 
-                    mensagem.style.color = "#b91c1c";
-                    return;
-                }
+        <section class="form-step" data-step="3">
+          <h2>Escolha do plano</h2>
+          <p class="step-description">Selecione uma opção para continuar. Esta tela é demonstrativa; a cobrança ainda não está integrada.</p>
 
-                mensagem.textContent =
-                    resultado.status || "Cadastro realizado com sucesso!";
-                mensagem.style.color = "#15803d";
-                formulario.reset();
+          <label class="plan-option">
+            <input type="radio" name="plano" value="basico" checked>
+            <span class="plan-copy">
+              <strong>Plano Básico</strong>
+              <small>Perfil profissional e presença no diretório.</small>
+            </span>
+            <strong class="plan-price">A definir</strong>
+          </label>
 
-            } catch (erro) {
-                mensagem.textContent =
-                    "Não foi possível conectar ao servidor.";
-                mensagem.style.color = "#b91c1c";
-            } finally {
-                botao.disabled = false;
-            }
-        });
-    </script>
+          <label class="plan-option">
+            <input type="radio" name="plano" value="profissional">
+            <span class="plan-copy">
+              <strong>Plano Profissional</strong>
+              <small>Mais recursos para divulgação do perfil.</small>
+            </span>
+            <strong class="plan-price">A definir</strong>
+          </label>
+
+          <p class="notice">Ao concluir, seus dados serão enviados para a API. Nenhum pagamento será realizado nesta versão.</p>
+        </section>
+
+        <div class="form-footer">
+          <button type="button" id="botaoVoltar" class="button button-secondary" hidden>← Voltar</button>
+          <span class="footer-spacer"></span>
+          <button type="button" id="botaoProximo" class="button button-primary">Próximo →</button>
+          <button type="submit" id="botaoCadastrar" class="button button-primary" hidden>Concluir cadastro</button>
+        </div>
+
+        <p id="mensagem" class="message" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="sucessoView" class="success-view" hidden>
+      <div class="success-icon" aria-hidden="true">✓</div>
+      <h1>Cadastro realizado!</h1>
+      <p class="success-lead">Seus dados foram enviados para análise.</p>
+      <p class="success-subtitle">A confirmação por email só será enviada quando o serviço de email estiver configurado.</p>
+
+      <div class="next-steps">
+        <h2>Próximos passos</h2>
+        <p><span>1</span> Confirmação do cadastro</p>
+        <p><span>2</span> Verificação dos dados profissionais</p>
+        <p><span>3</span> Ativação do perfil na plataforma</p>
+        <p><span>4</span> Acesso aos recursos do Dr.Match</p>
+      </div>
+
+      <a class="button button-primary success-button" href="/">Voltar à página inicial</a>
+    </section>
+  </main>
 </body>
 </html>
+```

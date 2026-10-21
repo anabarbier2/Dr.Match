@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Encontre pacientes e organize sua presença profissional com o Dr.Match.">
+  <title>Dr.Match | Conecte-se com seus próximos pacientes</title>
+  <link rel="stylesheet" href="{% static 'app/home.css' %}">
+  <script src="{% static 'app/home.js' %}" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="/" aria-label="Dr.Match - página inicial">
+        <span class="brand-mark" aria-hidden="true">✚</span><span>Dr.Match</span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+      <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+        <a href="#como-funciona">Encontrar Médico</a>
+        <a href="#planos">Para Médicos</a>
+      </nav>
+      <div class="header-actions">
+        <a class="search-link" href="/medicos/">Buscar médico</a>
+        <a class="button button-yellow button-small" href="/cadastro/">Cadastrar-se</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section-shell">
+      <div class="hero-copy">
+        <span class="eyebrow-pill"><span class="dot"></span> Plataforma de saúde confiável</span>
+        <h1>Conecte-se com<br>seus <em>próximos</em><br><em>pacientes</em></h1>
+        <p class="hero-description">Crie seu perfil médico, gerencie sua agenda e seja encontrado por pacientes que precisam da sua especialidade.</p>
+        <div class="hero-actions">
+          <a class="button button-yellow" href="/cadastro/">Cadastrar meu perfil <span aria-hidden="true">→</span></a>
+          <a class="button button-outline" href="/medicos/">Ver médicos cadastrados</a>
+        </div>
+        <p class="hero-note"><span aria-hidden="true">✓</span> Mais visibilidade para sua prática profissional</p>
+      </div>
+      <div class="hero-visual">
+        <img class="doctor-photo" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=1200&q=85" alt="Profissional da saúde usando tecnologia no consultório">
+        <div class="doctor-card">
+          <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=120&q=80" alt="" class="doctor-avatar">
+          <div class="doctor-details"><strong>Dra. Ana Ferreira</strong><span>Cardiologista · São Paulo</span></div>
+          <div class="next-appointment"><span>Próximo horário</span><strong>Hoje 14:00</strong></div>
+        </div>
+        <div class="floating-badge"><span class="badge-check">✓</span><span><strong>Seu perfil profissional</strong><small>Mais fácil de encontrar</small></span></div>
+      </div>
+    </section>
+
+    <section class="how-section" id="como-funciona">
+      <div class="section-shell">
+        <span class="section-kicker">COMO FUNCIONA</span>
+        <h2>Em 3 passos, seu perfil está ativo</h2>
+        <div class="steps-grid">
+          <article class="step-card"><span class="step-number">01</span><h3>Crie seu perfil</h3><p>Preencha suas informações: especialidade, CRM, convênios aceitos, contato e horários disponíveis.</p></article>
+          <article class="step-card"><span class="step-number">02</span><h3>Escolha seu plano</h3><p>Taxa de inscrição única a partir de R$ 79 com acesso por 12 meses. Sem mensalidades ou comissões.</p></article>
+          <article class="step-card"><span class="step-number">03</span><h3>Receba agendamentos</h3><p>Pacientes encontram seu perfil, visualizam sua disponibilidade e agendam diretamente pela plataforma.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="plans-section" id="planos">
+      <div class="section-shell">
+        <div class="section-heading centered">
+          <span class="section-kicker dark-kicker">PLANOS E PREÇOS</span>
+          <h2>Taxa de inscrição transparente</h2>
+          <p>Sem surpresas. Pague uma vez por ano e gerencie sua presença digital.</p>
+        </div>
+        <div class="plans-grid">
+          <article class="plan-card">
+            <h3>Essencial</h3><p class="plan-description">Ideal para médicos que estão começando na plataforma</p>
+            <p class="price">R$ 79<span> / ano</span></p>
+            <ul><li>Perfil completo com foto</li><li>Agenda online básica</li><li>Até 3 convênios listados</li><li>Visibilidade na busca</li><li>Notificações por email</li></ul>
+            <a class="button button-outline plan-button" href="/cadastro/?plano=essencial">Começar agora</a>
+          </article>
+          <article class="plan-card featured">
+            <span class="popular-label">★ Mais popular</span>
+            <h3>Profissional</h3><p class="plan-description">Para médicos que querem se destacar e crescer</p>
+            <p class="price">R$ 149<span> / ano</span></p>
+            <ul><li>Tudo do Essencial</li><li>Destaque nos resultados de busca</li><li>Convênios ilimitados</li><li>Agenda avançada com lembretes</li><li>Avaliações verificadas</li><li>Link personalizado do perfil</li><li>Dashboard de analytics</li></ul>
+            <a class="button button-yellow plan-button" href="/cadastro/?plano=profissional">Escolher Profissional</a>
+          </article>
+        </div>
+        <p class="pricing-note">Os planos e valores são apresentados como referência visual. Confirme a configuração comercial antes de habilitar cobranças reais.</p>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="section-shell cta-content">
+        <h2>Pronto para expandir sua clínica?</h2>
+        <p>Junte-se a médicos que querem alcançar novos pacientes pelo Dr.Match.</p>
+        <a class="button button-yellow" href="/cadastro/">Criar meu perfil agora <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="section-shell footer-inner">
+      <a class="brand footer-brand" href="/"><span class="brand-mark" aria-hidden="true">✚</span><span>Dr.Match</span></a>
+      <p>© <span id="currentYear">2026</span> Dr.Match. Todos os direitos reservados.</p>
+      <nav aria-label="Links do rodapé"><a href="/termos/">Termos</a><a href="/privacidade/">Privacidade</a><a href="mailto:suporte@drmatch.com">Suporte</a></nav>
+    </div>
+  </footer>
+</body>
+</html>
