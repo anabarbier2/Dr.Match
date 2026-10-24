@@ -19,11 +19,8 @@
       <span>Dr.Match</span>
     </a>
     <nav class="main-nav" aria-label="Navegação principal">
-      <a href="#">Encontrar Médico</a>
-      <a href="#">Para Médicos</a>
     </nav>
     <div class="header-actions">
-      <a class="search-link" href="#">Buscar médico</a>
       <a class="header-button" href="{% url 'pagina_cadastro' %}">Cadastrar-se</a>
     </div>
   </header>
@@ -83,17 +80,16 @@
           </div>
 
           <div class="field">
-            <label for="especialidade">Especialidade <span>*</span></label>
-            <select id="especialidade" name="especialidade" required>
-              <option value="">Selecione a especialidade</option>
-              <option>Cardiologia</option><option>Clínica Geral</option>
-              <option>Dermatologia</option><option>Endocrinologia</option>
-              <option>Ginecologia</option><option>Neurologia</option>
-              <option>Oftalmologia</option><option>Ortopedia</option>
-              <option>Pediatria</option><option>Psiquiatria</option>
-              <option>Outra</option>
-            </select>
-          </div>
+    <label for="especialidade">Especialidade <span>*</span></label>
+    <input
+        id="especialidade"
+        name="especialidade"
+        type="text"
+        maxlength="100"
+        placeholder="Digite sua especialidade"
+        required
+    >
+</div>
 
           <div class="field-grid">
             <div class="field">
@@ -122,7 +118,7 @@
                 <option>MT</option><option>MS</option><option>MG</option><option>PA</option>
                 <option>PB</option><option>PR</option><option>PE</option><option>PI</option>
                 <option>RJ</option><option>RN</option><option>RS</option><option>RO</option>
-                <option>RR</option><option>SC</option><option>SE</option><option>TO</option>
+                <option>RR</option><option>SC</option><option>SE</option><option>SP</option><option>TO</option>
               </select>
             </div>
           </div>

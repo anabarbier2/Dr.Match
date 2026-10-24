@@ -7,9 +7,7 @@ ESTRUTURA BASEADA NO PROJETO taxi.zip DO PROFESSOR.
 3. Crie o ambiente virtual:
    python -m venv venv
 4. Ative no PowerShell:
-   .\venv\Scripts\Activate.ps1
-   Se houver bloqueio de política no PowerShell, use o terminal CMD e execute:
-   venv\Scripts\activate.bat
+   source venv/Scripts/activate
 5. Instale as dependências:
    python -m pip install -r requirements.txt
 6. Crie as migrações e o banco:
