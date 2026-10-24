@@ -21,7 +21,7 @@
         <a href="#planos">Para Médicos</a>
       </nav>
       <div class="header-actions">
-        <a class="search-link" href="/medicos/">Buscar médico</a>
+        <a class="search-link" href="{% url 'buscar_medicos' %}">Buscar médico</a>
         <a class="button button-yellow button-small" href="/cadastro/">Cadastrar-se</a>
       </div>
     </div>
@@ -35,7 +35,7 @@
         <p class="hero-description">Crie seu perfil médico, gerencie sua agenda e seja encontrado por pacientes que precisam da sua especialidade.</p>
         <div class="hero-actions">
           <a class="button button-yellow" href="/cadastro/">Cadastrar meu perfil <span aria-hidden="true">→</span></a>
-          <a class="button button-outline" href="/medicos/">Ver médicos cadastrados</a>
+          <a class="button button-outline" href="{% url 'buscar_medicos' %}">Ver médicos cadastrados</a>
         </div>
         <p class="hero-note"><span aria-hidden="true">✓</span> Mais visibilidade para sua prática profissional</p>
       </div>

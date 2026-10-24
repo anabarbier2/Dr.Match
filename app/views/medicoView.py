@@ -85,3 +85,5 @@ def obter_csrf(request):
 @ensure_csrf_cookie
 def pagina_cadastro(request):
     return render(request, 'cadastro_medico.html')
+def pagina_buscar_medicos(request):
+    return render(request, 'buscar_medico.html')

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buscar médico | Dr.Match</title>
+
+    <link rel="stylesheet" href="{% static 'app/buscar_medico.css' %}">
+    <script src="{% static 'app/buscar_medico.js' %}" defer></script>
+</head>
+<body>
+
+    <header class="site-header">
+        <a class="brand" href="/" aria-label="Dr.Match página inicial">
+            <span class="brand-icon" aria-hidden="true">✚</span>
+            <span>Dr.Match</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navegação principal">
+            <a href="/">Início</a>
+            <a href="{% url 'pagina_cadastro' %}">Para Médicos</a>
+        </nav>
+
+        <div class="header-actions">
+            <a class="header-button" href="{% url 'pagina_cadastro' %}">
+                Cadastrar-se
+            </a>
+        </div>
+    </header>
+
+    <main class="page">
+
+
+        <section class="page-heading">
+            <span class="eyebrow">✦ Encontre o profissional ideal</span>
+
+            <h1>
+                Cuide da sua saúde com o
+                <span>médico certo.</span>
+            </h1>
+
+            <p>
+                Encontre profissionais cadastrados no Dr.Match
+                de acordo com o nome ou a especialidade.
+            </p>
+        </section>
+
+        <section class="search-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Encontre seu médico</h2>
+                    <p>Preencha um ou mais campos para pesquisar.</p>
+                </div>
+            </div>
+
+            <form id="formBusca" class="search-form">
+
+                <div class="field">
+                    <label for="busca">Nome do médico</label>
+                    <input
+                        id="busca"
+                        name="busca"
+                        type="text"
+                        placeholder="Ex.: Ana Barbier"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="especialidade">Especialidade</label>
+                    <input
+                        id="especialidade"
+                        name="especialidade"
+                        type="text"
+                        placeholder="Ex.: Cardiologia"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <button type="submit" class="button button-primary">
+                    Buscar médicos
+                </button>
+
+            </form>
+        </section>
+
+        <section class="results-section">
+            <div class="results-heading">
+                <h2>Médicos cadastrados</h2>
+                <span id="contador" class="results-count"></span>
+            </div>
+
+            <p id="mensagem" class="message" role="status"
+               aria-live="polite">
+                Carregando médicos...
+            </p>
+
+            <div id="resultados" class="results"></div>
+        </section>
+
+        <footer class="page-footer">
+            <a href="/">Dr.Match</a>
+            <p>Conectando médicos e pacientes.</p>
+        </footer>
+
+    </main>
+
+</body>
+</html>
