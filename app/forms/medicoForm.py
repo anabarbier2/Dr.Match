@@ -1,9 +1,8 @@
-from csv import reader
+
+import re
 
 from django import forms
 from app.models import Medico
-from app.especialidades import ESPECIALIDADES_MEDICAS
-import re
 
 
 class MedicoForm(forms.Form):
@@ -11,25 +10,41 @@ class MedicoForm(forms.Form):
         self.medico = medico
         super().__init__(*args, **kwargs)
 
+    # 1. Dados profissionais
     nome = forms.CharField(max_length=100)
     crm = forms.CharField(max_length=20)
-
+    estado_crm = forms.CharField(max_length=2, required=False)
     especialidade = forms.CharField(max_length=100)
-    telefone = forms.CharField(max_length=20)
+
+    # 2. Contato
     email = forms.EmailField()
-    convenio = forms.CharField(max_length=100, required=False)
+    telefone = forms.CharField(max_length=20)
+    cidade = forms.CharField(max_length=100, required=False)
+    estado = forms.CharField(max_length=2, required=False)
+
+    # 3. Perfil e atendimento
+    biografia = forms.CharField(required=False)
+    tipo_atendimento = forms.CharField(max_length=30, required=False)
+    convenio = forms.CharField(max_length=255, required=False)
+    endereco = forms.CharField(max_length=255, required=False)
+
+    # 4. Plano escolhido
+    plano = forms.CharField(max_length=30)
 
     def clean_telefone(self):
         data = self.cleaned_data["telefone"]
         data = re.sub(r"[^0-9+]", "", data)
 
         if len(re.sub(r"\D", "", data)) < 10:
-            raise forms.ValidationError("Informe um telefone válido.")
+            raise forms.ValidationError(
+                "Informe um telefone válido."
+            )
 
         return data
 
     def clean_crm(self):
         data = self.cleaned_data["crm"].strip().upper()
+
         consulta = Medico.objects.filter(crm=data)
 
         if self.medico is not None:
@@ -41,5 +56,12 @@ class MedicoForm(forms.Form):
             )
 
         return data
-def pagina_buscar_medicos(request):
-    return render(request, 'buscar_medico.html')
+
+    def clean_nome(self):
+        return self.cleaned_data["nome"].strip()
+
+    def clean_email(self):
+        return self.cleaned_data["email"].strip().lower()
+
+    def clean_especialidade(self):
+        return self.cleaned_data["especialidade"].strip()

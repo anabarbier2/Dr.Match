@@ -6,7 +6,7 @@ ESTRUTURA BASEADA NO PROJETO taxi.zip DO PROFESSOR.
 2. Abra Terminal > New Terminal.
 3. Crie o ambiente virtual:
    python -m venv venv
-4. Ative no PowerShell:
+4. Ative no Git Bash:
    source venv/Scripts/activate
 5. Instale as dependências:
    python -m pip install -r requirements.txt

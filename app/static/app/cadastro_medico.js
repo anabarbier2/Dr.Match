@@ -102,13 +102,22 @@ document.addEventListener("DOMContentLoaded", () => {
       const allData = Object.fromEntries(formData.entries());
 
       // Campos atualmente aceitos pela API do projeto.
+      
+      
       const apiData = {
-        nome: (allData.nome || "").trim(),
-        crm: (allData.crm || "").trim().toUpperCase(),
-        especialidade: (allData.especialidade || "").trim(),
-        telefone: (allData.telefone || "").trim(),
-        email: (allData.email || "").trim(),
-        convenio: (allData.convenio || "").trim()
+          nome: (allData.nome || "").trim(),
+          crm: (allData.crm || "").trim().toUpperCase(),
+          estado_crm: (allData.estado_crm || "").trim().toUpperCase(),
+          especialidade: (allData.especialidade || "").trim(),
+          email: (allData.email || "").trim(),
+          telefone: (allData.telefone || "").trim(),
+          cidade: (allData.cidade || "").trim(),
+          estado: (allData.estado || "").trim().toUpperCase(),
+          biografia: (allData.biografia || "").trim(),
+          tipo_atendimento: (allData.tipo_atendimento || "").trim(),
+          convenio: (allData.convenio || "").trim(),
+          endereco: (allData.endereco || "").trim(),
+          plano: (allData.plano || "").trim()
       };
 
       try {

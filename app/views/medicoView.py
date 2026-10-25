@@ -73,10 +73,17 @@ class MedicoView(View):
             'id': medico.id,
             'nome': medico.nome,
             'crm': medico.crm,
+            'estado_crm': medico.estado_crm,
             'especialidade': medico.especialidade,
-            'telefone': medico.telefone,
             'email': medico.email,
+            'telefone': medico.telefone,
+            'cidade': medico.cidade,
+            'estado': medico.estado,
+            'biografia': medico.biografia,
+            'tipo_atendimento': medico.tipo_atendimento,
             'convenio': medico.convenio,
+            'endereco': medico.endereco,
+            'plano': medico.plano,
         }
 @require_GET
 @ensure_csrf_cookie
