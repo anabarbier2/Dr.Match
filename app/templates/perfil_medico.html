@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do médico | Dr.Match</title>
+</head>
+<body>
+    <main>
+        <a href="javascript:history.back()">← Voltar</a>
+
+        <section>
+            <h1>{{ medico.nome }}</h1>
+            <h2>{{ medico.especialidade }}</h2>
+
+            {% if medico.biografia %}
+                <h3>Sobre o profissional</h3>
+                <p>{{ medico.biografia }}</p>
+            {% endif %}
+
+            <h3>Informações profissionais</h3>
+            <p><strong>CRM:</strong> {{ medico.crm }}{% if medico.estado_crm %}/{{ medico.estado_crm }}{% endif %}</p>
+            <p><strong>Tipo de atendimento:</strong> {{ medico.tipo_atendimento|default:"Não informado" }}</p>
+
+            <h3>Contato</h3>
+            <p><strong>E-mail:</strong> {{ medico.email }}</p>
+            <p><strong>Telefone:</strong> {{ medico.telefone|default:"Não informado" }}</p>
+            <p><strong>Endereço:</strong> {{ medico.endereco|default:"Não informado" }}</p>
+            <p><strong>Cidade:</strong> {{ medico.cidade|default:"Não informada" }}{% if medico.estado %} - {{ medico.estado }}{% endif %}</p>
+
+            <h3>Convênios</h3>
+            <p>{{ medico.convenio|default:"Consulte o profissional sobre convênios." }}</p>
+
+            <a href="/agendamento/?medico={{ medico.id }}" class="button">
+                Fazer pré-agendamento
+            </a>
+        </section>
+    </main>
+</body>
+</html>

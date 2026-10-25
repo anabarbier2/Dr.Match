@@ -94,3 +94,6 @@ def pagina_cadastro(request):
     return render(request, 'cadastro_medico.html')
 def pagina_buscar_medicos(request):
     return render(request, 'buscar_medico.html')
+def perfil_medico(request, medico_id):
+    medico = get_object_or_404(Medico, id=medico_id)
+    return render(request, 'perfil_medico.html', {'medico': medico})

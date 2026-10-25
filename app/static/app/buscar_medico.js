@@ -65,6 +65,10 @@ async function buscarMedicos() {
             convenio.className = "convenio";
             convenio.textContent =
                 `Convênio: ${medico.convenio || "Não informado"}`;
+            const botaoAgendar = document.createElement("a");
+            botaoAgendar.className = "button button-primary";
+            botaoAgendar.textContent = "Agendar";
+            botaoAgendar.href = `/medicos/${medico.id}/perfil/`;
 
             cartao.append(
                 nome,
@@ -72,7 +76,8 @@ async function buscarMedicos() {
                 crm,
                 email,
                 telefone,
-                convenio
+                convenio,
+                botaoAgendar
             );
 
             resultados.appendChild(cartao);
