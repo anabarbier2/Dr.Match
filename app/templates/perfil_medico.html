@@ -1,40 +1,173 @@
+```html
+{% load static %}
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Perfil do médico | Dr.Match</title>
+
+    <link rel="stylesheet" href="{% static 'app/perfil_medico.css' %}">
+
+    <!-- Estilos do FullCalendar -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.css"
+    >
+
+    <!-- Biblioteca do calendário -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/locales-all.global.min.js"></script>
 </head>
+
 <body>
-    <main>
+    <main class="perfil-medico">
+
         <a href="javascript:history.back()">← Voltar</a>
 
-        <section>
-            <h1>{{ medico.nome }}</h1>
-            <h2>{{ medico.especialidade }}</h2>
+        <section class="perfil-conteudo">
 
-            {% if medico.biografia %}
-                <h3>Sobre o profissional</h3>
-                <p>{{ medico.biografia }}</p>
-            {% endif %}
+            <!-- Cabeçalho do médico -->
+            <h1 class="medico-nome">{{ medico.nome }}</h1>
 
-            <h3>Informações profissionais</h3>
-            <p><strong>CRM:</strong> {{ medico.crm }}{% if medico.estado_crm %}/{{ medico.estado_crm }}{% endif %}</p>
-            <p><strong>Tipo de atendimento:</strong> {{ medico.tipo_atendimento|default:"Não informado" }}</p>
+            <h2 class="medico-especialidade">
+                {{ medico.especialidade }}
+            </h2>
 
-            <h3>Contato</h3>
-            <p><strong>E-mail:</strong> {{ medico.email }}</p>
-            <p><strong>Telefone:</strong> {{ medico.telefone|default:"Não informado" }}</p>
-            <p><strong>Endereço:</strong> {{ medico.endereco|default:"Não informado" }}</p>
-            <p><strong>Cidade:</strong> {{ medico.cidade|default:"Não informada" }}{% if medico.estado %} - {{ medico.estado }}{% endif %}</p>
+            <!-- Sobre o profissional -->
+            <article class="info-card">
+                <h3 class="card-titulo">Sobre o profissional</h3>
 
-            <h3>Convênios</h3>
-            <p>{{ medico.convenio|default:"Consulte o profissional sobre convênios." }}</p>
+                <p>
+                    {{ medico.biografia|default:"Biografia não informada." }}
+                </p>
+            </article>
 
-            <a href="/agendamento/?medico={{ medico.id }}" class="button">
+            <!-- Informações profissionais -->
+            <article class="info-card">
+                <h3 class="card-titulo">Informações profissionais</h3>
+
+                <p>
+                    <strong>CRM:</strong>
+                    {{ medico.crm }}{% if medico.estado_crm %}/{{ medico.estado_crm }}{% endif %}
+                </p>
+
+                <p>
+                    <strong>Tipo de atendimento:</strong>
+                    {{ medico.tipo_atendimento|default:"Não informado" }}
+                </p>
+
+                <p>
+                    <strong>Plano:</strong>
+                    {{ medico.plano|default:"Não informado" }}
+                </p>
+            </article>
+
+            <!-- Contato -->
+            <article class="info-card">
+                <h3 class="card-titulo">Contato</h3>
+
+                <p>
+                    <strong>E-mail:</strong>
+                    {{ medico.email }}
+                </p>
+
+                <p>
+                    <strong>Telefone:</strong>
+                    {{ medico.telefone|default:"Não informado" }}
+                </p>
+
+                <p>
+                    <strong>Endereço:</strong>
+                    {{ medico.endereco|default:"Não informado" }}
+                </p>
+
+                <p>
+                    <strong>Cidade:</strong>
+                    {{ medico.cidade|default:"Não informada" }}
+                    {% if medico.estado %}- {{ medico.estado }}{% endif %}
+                </p>
+            </article>
+
+            <!-- Convênios -->
+            <article class="info-card">
+                <h3 class="card-titulo">Convênios</h3>
+
+                <p>
+                    {{ medico.convenio|default:"Consulte o profissional sobre convênios." }}
+                </p>
+            </article>
+
+            <!-- Agenda médica -->
+            <section class="agenda-medica">
+
+                <div class="agenda-cabecalho">
+                    <div>
+                        <h2>Agenda de atendimento</h2>
+
+                        <p>
+                            Selecione uma data para consultar os horários
+                            disponíveis deste profissional.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mensagens do calendário -->
+                <p
+                    id="mensagem-agenda"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+
+                <!-- O FullCalendar será exibido aqui -->
+                <div id="calendario-medico"></div>
+
+                <!-- Horários da data selecionada -->
+                <div id="horarios-do-dia" hidden>
+
+                    <h3>
+                        Data selecionada:
+                        <span id="data-selecionada"></span>
+                    </h3>
+
+                    <p id="mensagem-horarios">
+                        Selecione uma data para consultar os horários.
+                    </p>
+
+                    <div id="lista-horarios"></div>
+
+                </div>
+            </section>
+
+            <!-- Botão de pré-agendamento -->
+            <a
+                href="/agendamento/?medico={{ medico.id }}"
+                class="button"
+            >
                 Fazer pré-agendamento
             </a>
+
         </section>
     </main>
+
+    <!-- Identificação do médico para o JavaScript -->
+    <script>
+        window.DRMATCH_MEDICO_ID = "{{ medico.id|escapejs }}";
+    </script>
+
+    <!-- JavaScript responsável pelo perfil -->
+    <script
+        src="{% static 'app/perfil_medico.js' %}"
+        defer
+    ></script>
+
+    <!-- JavaScript responsável pelo calendário -->
+    <script
+        src="{% static 'app/calendario_medico.js' %}"
+        defer
+    ></script>
+
 </body>
 </html>
+```
