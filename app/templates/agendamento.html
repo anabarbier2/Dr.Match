@@ -55,11 +55,16 @@
                         <option value="">Carregando médicos...</option>
                     </select>
                 </div>
-
+                //<!-- não muda nada, mas deixa ai: -->
                 <div class="field">
-                    <label>Escolha uma data</label>
                     <div id="calendario"></div>
                     <input id="data" name="data" type="hidden" required>
+                </div>
+                <div class="field">
+                    <label for="horario">Escolha um horário</label>
+                    <select id="horario" name="horario" required disabled>
+                    <option value="">Selecione primeiro o médico e a data</option>
+                    </select>
                 </div>
                 <button type="submit" id="botaoEnviar">
                     Solicitar pré-agendamento

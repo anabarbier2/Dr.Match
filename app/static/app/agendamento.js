@@ -1,11 +1,25 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formAgendamento");
+    const campoNome = document.getElementById("nome");
+    const campoEmail = document.getElementById("email");
+    const campoTelefone = document.getElementById("telefone");
     const campoMedico = document.getElementById("medico");
     const campoData = document.getElementById("data");
     const campoHorario = document.getElementById("horario");
     const campoMensagem = document.getElementById("mensagem");
     const botaoEnviar = document.getElementById("botaoEnviar");
+
+    // Evita erros caso algum elemento obrigatório não esteja no HTML.
+    if (
+        !form || !campoNome || !campoEmail || !campoTelefone ||
+        !campoMedico || !campoData || !campoHorario ||
+        !campoMensagem || !botaoEnviar
+    ) {
+        console.error(
+            "Dr.Match: confira os IDs dos campos em agendamento.html."
+        );
+        return;
+    }
 
     const horariosPossiveis = [
         "08:00", "08:30",
@@ -18,14 +32,21 @@ document.addEventListener("DOMContentLoaded", () => {
         "16:00", "16:30"
     ];
 
-    const hoje = new Date();
-    const dataLocal = [
-        hoje.getFullYear(),
-        String(hoje.getMonth() + 1).padStart(2, "0"),
-        String(hoje.getDate()).padStart(2, "0")
-    ].join("-");
+    const parametros = new URLSearchParams(window.location.search);
+    const medicoDaURL = parametros.get("medico");
+    const dataDaURL = parametros.get("data");
+    const horarioDaURL = parametros.get("horario");
 
-    campoData.min = dataLocal;
+    function dataLocalISO() {
+        const hoje = new Date();
+        const ano = hoje.getFullYear();
+        const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+        const dia = String(hoje.getDate()).padStart(2, "0");
+        return `${ano}-${mes}-${dia}`;
+    }
+
+    const hojeISO = dataLocalISO();
+    campoData.min = hojeISO;
 
     function mostrarMensagem(texto, tipo = "") {
         campoMensagem.textContent = texto;
@@ -36,92 +57,134 @@ document.addEventListener("DOMContentLoaded", () => {
         select.replaceChildren(new Option(texto, ""));
     }
 
+    async function lerResposta(resposta) {
+        const texto = await resposta.text();
+
+        try {
+            return texto ? JSON.parse(texto) : {};
+        } catch {
+            throw new Error(
+                "O servidor retornou uma resposta inválida. Confira o terminal do Django."
+            );
+        }
+    }
+
     async function carregarMedicos() {
+        campoMedico.disabled = false;
         definirOpcaoInicial(campoMedico, "Carregando médicos...");
 
         try {
-            const parametros = new URLSearchParams(window.location.search);
-            const medicoSelecionado = parametros.get("medico");
-
-            if (
-                medicoSelecionado &&
-                [...campoMedico.options].some((opcao) => opcao.value === medicoSelecionado)) {
-                campoMedico.value = medicoSelecionado;
-                campoMedico.disabled = true;}
-
             const resposta = await fetch("/medicos/");
-            if (!resposta.ok) {
-                throw new Error("Não foi possível buscar os médicos.");
-            }
+            const resultado = await lerResposta(resposta);
 
-            const medicos = await resposta.json();
+            if (!resposta.ok) {
+                throw new Error(
+                    resultado.erro || "Não foi possível buscar os médicos."
+                );
+            }
 
             definirOpcaoInicial(campoMedico, "Selecione um médico");
 
-            medicos.forEach((medico) => {
-                const opcao = new Option(
-                    `${medico.nome} — ${medico.especialidade}`,
-                    medico.id
+            resultado.forEach((medico) => {
+                campoMedico.add(
+                    new Option(
+                        `${medico.nome} — ${medico.especialidade}`,
+                        String(medico.id)
+                    )
                 );
-                campoMedico.add(opcao);
             });
 
-            if (medicos.length === 0) {
+            if (resultado.length === 0) {
                 definirOpcaoInicial(
                     campoMedico,
                     "Nenhum médico cadastrado"
                 );
+                mostrarMensagem(
+                    "Não há médicos cadastrados no sistema.",
+                    "error"
+                );
+                return;
             }
+
+            if (medicoDaURL) {
+                const existe = [...campoMedico.options].some(
+                    (opcao) => opcao.value === medicoDaURL
+                );
+
+                if (existe) {
+                    campoMedico.value = medicoDaURL;
+                    campoMedico.disabled = true;
+                } else {
+                    mostrarMensagem(
+                        "O médico selecionado não foi encontrado.",
+                        "error"
+                    );
+                }
+            }
+
+            if (dataDaURL && /^\d{4}-\d{2}-\d{2}$/.test(dataDaURL)) {
+                if (dataDaURL >= hojeISO) {
+                    campoData.value = dataDaURL;
+                } else {
+                    mostrarMensagem(
+                        "A data selecionada já passou. Escolha outra data.",
+                        "error"
+                    );
+                }
+            }
+
+            await carregarHorarios();
         } catch (erro) {
             definirOpcaoInicial(
                 campoMedico,
                 "Erro ao carregar médicos"
             );
+            campoMedico.disabled = true;
             mostrarMensagem(
-                "Não foi possível carregar os médicos. Atualize a página e tente novamente.",
+                erro.message || "Não foi possível carregar os médicos.",
                 "error"
             );
         }
     }
 
     async function carregarHorarios() {
-        definirOpcaoInicial(campoHorario, "Carregando horários...");
         campoHorario.disabled = true;
+        definirOpcaoInicial(
+            campoHorario,
+            "Selecione primeiro o médico e a data"
+        );
 
         const medico = campoMedico.value;
         const data = campoData.value;
 
         if (!medico || !data) {
-            definirOpcaoInicial(
-                campoHorario,
-                "Selecione primeiro o médico e a data"
-            );
             return;
         }
 
-        if (data < dataLocal) {
-            definirOpcaoInicial(
-                campoHorario,
-                "Escolha uma data válida"
+        if (data < hojeISO) {
+            definirOpcaoInicial(campoHorario, "Escolha uma data válida");
+            mostrarMensagem(
+                "Não é possível selecionar uma data passada.",
+                "error"
             );
-            mostrarMensagem("Não é possível selecionar uma data passada.", "error");
             return;
         }
 
         try {
-            const parametros = new URLSearchParams({ medico, data });
+            const consulta = new URLSearchParams({ medico, data });
             const resposta = await fetch(
-                `/agendamentos/horarios-ocupados/?${parametros}`
+                `/agendamentos/horarios-ocupados/?${consulta}`
             );
-            const resultado = await resposta.json();
+            const resultado = await lerResposta(resposta);
 
             if (!resposta.ok) {
-                throw new Error(resultado.erro || "Erro ao consultar horários.");
+                throw new Error(
+                    resultado.erro || "Não foi possível consultar os horários."
+                );
             }
 
             const ocupados = resultado.horarios_ocupados || [];
             const agora = new Date();
-            const dataHoje = data === dataLocal;
             const minutosAgora = agora.getHours() * 60 + agora.getMinutes();
 
             definirOpcaoInicial(campoHorario, "Selecione um horário");
@@ -129,14 +192,16 @@ document.addEventListener("DOMContentLoaded", () => {
             let quantidade = 0;
 
             horariosPossiveis.forEach((horario) => {
-                const [hora, minuto] = horario.split(":").map(Number);
-                const minutosHorario = hora * 60 + minuto;
-
                 if (ocupados.includes(horario)) {
                     return;
                 }
 
-                if (dataHoje && minutosHorario <= minutosAgora) {
+                const [hora, minuto] = horario.split(":").map(Number);
+
+                if (
+                    data === hojeISO &&
+                    hora * 60 + minuto <= minutosAgora
+                ) {
                     return;
                 }
 
@@ -150,10 +215,20 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Nenhum horário disponível nesta data"
                 );
                 mostrarMensagem(
-                    "Não há horários disponíveis para esta data. Tente outro dia.",
+                    "Não há horários disponíveis para essa data. Escolha outro dia.",
                     "error"
                 );
                 return;
+            }
+
+            // Preenche o horário que veio do calendário, se ainda estiver livre.
+            if (
+                horarioDaURL &&
+                [...campoHorario.options].some(
+                    (opcao) => opcao.value === horarioDaURL
+                )
+            ) {
+                campoHorario.value = horarioDaURL;
             }
 
             campoHorario.disabled = false;
@@ -161,10 +236,10 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (erro) {
             definirOpcaoInicial(
                 campoHorario,
-                "Não foi possível carregar os horários"
+                "Erro ao carregar horários"
             );
             mostrarMensagem(
-                erro.message || "Erro ao consultar os horários.",
+                erro.message || "Não foi possível carregar os horários.",
                 "error"
             );
         }
@@ -175,19 +250,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     form.addEventListener("submit", async (evento) => {
         evento.preventDefault();
+
+        if (botaoEnviar.disabled) {
+            return;
+        }
+
         mostrarMensagem("");
 
         if (!form.reportValidity()) {
             return;
         }
 
-        botaoEnviar.disabled = true;
-        botaoEnviar.textContent = "Enviando solicitação...";
+        if (!campoMedico.value || !campoData.value || !campoHorario.value) {
+            mostrarMensagem(
+                "Selecione o médico, a data e um horário disponível.",
+                "error"
+            );
+            return;
+        }
 
         const dados = {
-            nome: document.getElementById("nome").value.trim(),
-            email: document.getElementById("email").value.trim(),
-            telefone: document.getElementById("telefone").value.trim(),
+            nome: campoNome.value.trim(),
+            email: campoEmail.value.trim(),
+            telefone: campoTelefone.value.trim(),
             medico: campoMedico.value,
             data: campoData.value,
             horario: campoHorario.value
@@ -197,39 +282,52 @@ document.addEventListener("DOMContentLoaded", () => {
             "[name=csrfmiddlewaretoken]"
         )?.value;
 
+        botaoEnviar.disabled = true;
+        botaoEnviar.textContent = "Enviando solicitação...";
+
         try {
             const resposta = await fetch("/agendamentos/criar/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRFToken": csrf
+                    "X-CSRFToken": csrf || ""
                 },
                 body: JSON.stringify(dados)
             });
 
-            const resultado = await resposta.json();
+            const resultado = await lerResposta(resposta);
 
             if (!resposta.ok) {
                 throw new Error(
                     resultado.erro ||
                     resultado.mensagem ||
-                    "Não foi possível registrar o pedido."
+                    "Não foi possível registrar o pré-agendamento."
                 );
             }
 
             mostrarMensagem(
                 resultado.mensagem ||
-                "Pré-agendamento solicitado! Entre em contato com o médico para confirmar sua consulta.",
+                "Pré-agendamento solicitado com sucesso!",
                 "success"
             );
 
-            form.reset();
-            campoData.min = dataLocal;
-            definirOpcaoInicial(campoHorario, "Selecione primeiro o médico e a data");
-            campoHorario.disabled = true;
-
-            // Atualiza a lista de horários para o caso de novo pedido.
+            // Atualiza os horários: o horário recém-solicitado deve desaparecer.
             await carregarHorarios();
+
+            form.reset();
+            campoData.min = dataLocalISO();
+
+            // Mantém o médico selecionado quando veio do perfil.
+            if (medicoDaURL) {
+                campoMedico.value = medicoDaURL;
+                campoMedico.disabled = true;
+            }
+
+            campoHorario.disabled = true;
+            definirOpcaoInicial(
+                campoHorario,
+                "Selecione primeiro o médico e a data"
+            );
         } catch (erro) {
             mostrarMensagem(
                 erro.message || "Erro ao enviar a solicitação.",
