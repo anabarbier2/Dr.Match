@@ -7,23 +7,34 @@
   <meta name="description" content="Encontre pacientes e organize sua presença profissional com o Dr.Match.">
   <title>Dr.Match | Conecte-se com seus próximos pacientes</title>
   <link rel="stylesheet" href="{% static 'app/home.css' %}">
+  <link rel="stylesheet" href="{% static 'app/logo.css' %}">
   <script src="{% static 'app/home.js' %}" defer></script>
 </head>
 <body>
   <header class="site-header">
     <div class="nav-wrap">
-      <a class="brand" href="/" aria-label="Dr.Match - página inicial">
-        <span class="brand-mark" aria-hidden="true">✚</span><span>Dr.Match</span>
+      <a class="brand" href="/" aria-label="Dr.Match página inicial">
+        <span class="brand-icon" aria-hidden="true">✚</span>
+        <span>Dr.Match</span>
       </a>
       <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
       <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
         <a href="#como-funciona">Como funciona?</a>
         <a href="#planos">Para Médicos</a>
       </nav>
-      <div class="header-actions">
-        <a class="search-link" href="{% url 'buscar_medicos' %}">Buscar médico</a>
-        <a class="button button-yellow button-small" href="/cadastro/">Cadastrar-se</a>
-      </div>
+<div class="header-actions">
+    <a class="search-link" href="{% url 'buscar_medicos' %}">
+        Buscar médico
+    </a>
+
+    <a class="search-link" href="{% url 'meus_agendamentos' %}">
+        Meus agendamentos
+    </a>
+
+    <a class="button button-yellow button-small" href="/cadastro/">
+        Cadastrar-se
+    </a>
+</div>
     </div>
   </header>
 
@@ -32,7 +43,7 @@
       <div class="hero-copy">
         <span class="eyebrow-pill"><span class="dot"></span> Plataforma de saúde confiável</span>
         <h1>Conecte-se com<br>seus <em>próximos</em><br><em>pacientes</em></h1>
-        <p class="hero-description">Crie seu perfil médico, gerencie sua agenda e seja encontrado por pacientes que precisam da sua especialidade.</p>
+        <p class="hero-description">Crie seu perfil médico e seja encontrado por pacientes que precisam da sua especialidade.</p>
         <div class="hero-actions">
           <a class="button button-yellow" href="/cadastro/">Cadastrar meu perfil <span aria-hidden="true">→</span></a>
           <a class="button button-outline" href="{% url 'buscar_medicos' %}">Ver médicos cadastrados</a>
@@ -56,8 +67,8 @@
         <h2>Em 3 passos, seu perfil está ativo</h2>
         <div class="steps-grid">
           <article class="step-card"><span class="step-number">01</span><h3>Crie seu perfil</h3><p>Preencha suas informações: especialidade, CRM, convênios aceitos, contato e horários disponíveis.</p></article>
-          <article class="step-card"><span class="step-number">02</span><h3>Escolha seu plano</h3><p>Taxa de inscrição única a partir de R$ 79 com acesso por 12 meses. Sem mensalidades ou comissões.</p></article>
-          <article class="step-card"><span class="step-number">03</span><h3>Receba agendamentos</h3><p>Pacientes encontram seu perfil, visualizam sua disponibilidade e agendam diretamente pela plataforma.</p></article>
+          <article class="step-card"><span class="step-number">02</span><h3>Escolha seu plano</h3><p>Taxa de inscrição a partir de R$ 79 com acesso por 12 meses. Sem mensalidades ou comissões.</p></article>
+          <article class="step-card"><span class="step-number">03</span><h3>Receba agendamentos</h3><p>Pacientes encontram seu perfil, visualizam sua disponibilidade e pré-agendam diretamente pela plataforma.</p></article>
         </div>
       </div>
     </section>
@@ -73,12 +84,12 @@
           <article class="plan-card">
             <h3>Essencial</h3><p class="plan-description">Ideal para médicos que estão começando na plataforma</p>
             <p class="price">R$ 79<span> / ano</span></p>
-            <ul><li>Perfil completo com foto</li><li>Agenda online básica</li><li>Até 3 convênios listados</li><li>Visibilidade na busca</li><li>Notificações por email</li></ul>
+            <ul><li>Perfil completo!</li><li>Agenda online básica</li><li>Visibilidade na busca</li><li>Pré-agendamentos</li></ul>
             <a class="button button-outline plan-button" href="/cadastro/?plano=essencial">Começar agora</a>
           </article>
           <article class="plan-card featured">
             <span class="popular-label">★ Mais popular</span>
-            <h3>Profissional</h3><p class="plan-description">Para médicos que querem se destacar e crescer</p>
+            <h3>Profissional(Em breve!)</h3><p class="plan-description">Para médicos que querem se destacar e crescer</p>
             <p class="price">R$ 149<span> / ano</span></p>
             <ul><li>Tudo do Essencial</li><li>Destaque nos resultados de busca</li><li>Convênios ilimitados</li><li>Agenda avançada com lembretes</li><li>Avaliações verificadas</li><li>Link personalizado do perfil</li><li>Dashboard de analytics</li></ul>
             <a class="button button-yellow plan-button" href="/cadastro/?plano=profissional">Começar agora</a>
@@ -99,7 +110,10 @@
 
   <footer class="site-footer">
     <div class="section-shell footer-inner">
-      <a class="brand footer-brand" href="/"><span class="brand-mark" aria-hidden="true">✚</span><span>Dr.Match</span></a>
+     <a class="brand footer-brand" href="/" aria-label="Dr.Match página inicial">
+      <span class="brand-icon" aria-hidden="true">✚</span>
+      <span>Dr.Match</span>
+    </a>
       <p>© <span id="currentYear">2026</span> Dr.Match. Todos os direitos reservados.</p>
       <nav aria-label="Links do rodapé"><a href="/termos/">Termos</a><a href="/privacidade/">Privacidade</a><a href="mailto:suporte@drmatch.com">Suporte</a></nav>
     </div>

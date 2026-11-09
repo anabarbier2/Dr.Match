@@ -69,12 +69,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    
     async function carregarMedicos() {
         campoMedico.disabled = false;
         definirOpcaoInicial(campoMedico, "Carregando médicos...");
 
         try {
-            const resposta = await fetch("/medicos/");
+            let urlMedicos = "/medicos/";
+
+            if (medicoDaURL) {
+            urlMedicos += `${encodeURIComponent(medicoDaURL)}/`;
+            } else {
+            urlMedicos += "?todos=1";
+            }
+
+            const resposta = await fetch(urlMedicos, {
+            cache: "no-store"
+            });
+
             const resultado = await lerResposta(resposta);
 
             if (!resposta.ok) {
@@ -83,69 +95,73 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             }
 
+            const listaMedicos = Array.isArray(resultado)
+                ? resultado
+                : [resultado];
+
             definirOpcaoInicial(campoMedico, "Selecione um médico");
 
-            resultado.forEach((medico) => {
+            listaMedicos.forEach((medico) => {
                 campoMedico.add(
                     new Option(
                         `${medico.nome} — ${medico.especialidade}`,
-                        String(medico.id)
+                    String(medico.id)
                     )
                 );
             });
 
-            if (resultado.length === 0) {
-                definirOpcaoInicial(
-                    campoMedico,
-                    "Nenhum médico cadastrado"
-                );
-                mostrarMensagem(
-                    "Não há médicos cadastrados no sistema.",
-                    "error"
-                );
-                return;
-            }
-
             if (medicoDaURL) {
-                const existe = [...campoMedico.options].some(
-                    (opcao) => opcao.value === medicoDaURL
+                const existe = listaMedicos.some(
+                    medico => String(medico.id) === String(medicoDaURL)
                 );
 
-                if (existe) {
-                    campoMedico.value = medicoDaURL;
-                    campoMedico.disabled = true;
-                } else {
+                if (!existe) {
                     mostrarMensagem(
                         "O médico selecionado não foi encontrado.",
                         "error"
                     );
+                    return;
                 }
+
+                campoMedico.value = String(medicoDaURL);
+                campoMedico.disabled = true;
             }
 
-            if (dataDaURL && /^\d{4}-\d{2}-\d{2}$/.test(dataDaURL)) {
-                if (dataDaURL >= hojeISO) {
-                    campoData.value = dataDaURL;
-                } else {
-                    mostrarMensagem(
-                        "A data selecionada já passou. Escolha outra data.",
-                        "error"
-                    );
-                }
+            if (listaMedicos.length === 0) {
+                definirOpcaoInicial(
+                    campoMedico,
+                    "Nenhum médico cadastrado"
+                );
+                return;
             }
 
-            await carregarHorarios();
-        } catch (erro) {
-            definirOpcaoInicial(
-                campoMedico,
-                "Erro ao carregar médicos"
-            );
-            campoMedico.disabled = true;
-            mostrarMensagem(
-                erro.message || "Não foi possível carregar os médicos.",
-                "error"
-            );
+        if (dataDaURL && /^\d{4}-\d{2}-\d{2}$/.test(dataDaURL)) {
+            if (dataDaURL >= hojeISO) {
+                campoData.value = dataDaURL;
+            } else {
+                mostrarMensagem(
+                    "A data selecionada já passou. Escolha outra data.",
+                    "error"
+                );
+            }
         }
+
+        await carregarHorarios();
+
+    } catch (erro) {
+        definirOpcaoInicial(
+            campoMedico,
+            "Erro ao carregar médicos"
+        );
+
+        campoMedico.disabled = true;
+
+        mostrarMensagem(
+            erro.message || "Não foi possível carregar os médicos.",
+            "error"
+        );
     }
+}
 
     async function carregarHorarios() {
         campoHorario.disabled = true;

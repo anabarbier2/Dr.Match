@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pagamento | Dr.Match</title>
+
+    <link rel="stylesheet" href="{% static 'app/cadastro_medico.css' %}">
+    <link rel="stylesheet" href="{% static 'app/pagamento_demo.css' %}">
+    <link rel="stylesheet" href="{% static 'app/logo.css' %}">
+</head>
+
+<body>
+
+<header class="site-header">
+    <a class="brand" href="/" aria-label="Dr.Match página inicial">
+        <span class="brand-icon" aria-hidden="true">✚</span>
+        <span>Dr.Match</span>
+    </a>
+    <div class="header-actions">
+        <a class="header-button" href="/">Página inicial</a>
+    </div>
+</header>
+
+<main class="page">
+
+    <a class="back-link" href="/">← Voltar à página inicial</a>
+
+    <div class="payment-heading">
+        <h1>Pagamento do cadastro</h1>
+        <p>Olá, {{ medico.nome }}! Falta pouco para concluir seu cadastro.</p>
+    </div>
+
+    <section class="payment-card">
+
+        <div class="demo-warning">
+            <strong>Pagamento demonstrativo</strong>
+            <p>
+                Esta é uma simulação. Nenhum pagamento real será realizado.
+                Não informe dados bancários ou de cartão.
+            </p>
+        </div>
+
+        {% if aprovado %}
+
+            <div class="payment-success">
+
+                <div class="success-icon">✓</div>
+
+                <h2>Pagamento aprovado!</h2>
+
+                <p class="success-lead">
+                    Seu cadastro foi liberado no Dr.Match.
+                </p>
+
+                <div class="plan-summary">
+                    <small>PLANO CONTRATADO</small>
+
+                    <h2>
+                        {% if pagamento.plano == "basico" %}
+                            Plano Essencial
+                        {% else %}
+                            Plano Profissional
+                        {% endif %}
+                    </h2>
+
+                    <p class="price">
+                        R$ {{ pagamento.valor|floatformat:2 }}
+                    </p>
+                </div>
+
+                <a
+                    class="profile-link"
+                    href="/medicos/{{ medico.id }}/perfil/"
+                >
+                    Ver meu perfil
+                </a>
+
+            </div>
+
+        {% else %}
+
+            {% if erro %}
+                <div class="payment-error">{{ erro }}</div>
+            {% endif %}
+
+            <div class="plan-summary">
+
+                <small>PLANO SELECIONADO</small>
+
+                <h2>
+                    {% if medico.plano == "basico" %}
+                        Plano Essencial
+                    {% elif medico.plano == "profissional" %}
+                        Plano Profissional
+                    {% else %}
+                        Plano selecionado
+                    {% endif %}
+                </h2>
+
+                <p class="price">
+                    R$ {{ valor|floatformat:2 }}
+                    <small>/ ano</small>
+                </p>
+
+            </div>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <h3 class="payment-title">
+                    Escolha uma forma de pagamento
+                </h3>
+
+                <label class="payment-option">
+                    <input
+                        type="radio"
+                        name="metodo"
+                        value="PIX"
+                        required
+                    >
+
+                    <span>
+                        <strong>Pix</strong>
+                        <small>Pagamento simulado por Pix</small>
+                    </span>
+                </label>
+
+                <label class="payment-option">
+                    <input
+                        type="radio"
+                        name="metodo"
+                        value="CARTAO"
+                        required
+                    >
+
+                    <span>
+                        <strong>Cartão</strong>
+                        <small>Pagamento simulado por cartão</small>
+                    </span>
+                </label>
+
+                <button
+                    type="submit"
+                    class="button button-primary payment-button"
+                >
+                    Simular pagamento aprovado
+                </button>
+
+            </form>
+
+        {% endif %}
+
+        <div class="payment-footer">
+            Dr.Match — Plataforma demonstrativa de cadastro médico.
+            Nenhuma cobrança financeira é realizada.
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

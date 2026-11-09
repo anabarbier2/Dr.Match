@@ -10,18 +10,17 @@
     <title>Cadastro médico | Dr.Match</title>
 
     <link rel="stylesheet" href="{% static 'app/cadastro_medico.css' %}">
-    <script src="{% static 'app/cadastro_medico.js' %}" defer></script>
+    <script src="{% static 'app/cadastro_medico.js' %}?v=3" defer></script>
+    <link rel="stylesheet" href="{% static 'app/logo.css' %}">
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="/" aria-label="Dr.Match página inicial">
-      <span class="brand-mark" aria-hidden="true">✚</span><span>Dr.Match</span>
+      <span class="brand-icon" aria-hidden="true">✚</span>
+      <span>Dr.Match</span>
     </a>
     <nav class="main-nav" aria-label="Navegação principal">
     </nav>
-    <div class="header-actions">
-      <a class="header-button" href="{% url 'pagina_cadastro' %}">Cadastrar-se</a>
-    </div>
   </header>
 
   <main class="page">
@@ -164,22 +163,21 @@
           <label class="plan-option">
             <input type="radio" name="plano" value="basico" checked>
             <span class="plan-copy">
-              <strong>Plano Básico</strong>
+              <strong>Plano Essencial</strong>
               <small>Perfil profissional e presença no diretório.</small>
             </span>
-            <strong class="plan-price">A definir</strong>
+            <strong class="plan-price">R$ 79 / ano</strong>
           </label>
 
-          <label class="plan-option">
-            <input type="radio" name="plano" value="profissional">
+          <label class="plan-option plan-disabled">
+            <input type="radio" name="plano" value="profissional" disabled>
             <span class="plan-copy">
               <strong>Plano Profissional</strong>
               <small>Mais recursos para divulgação do perfil.</small>
+                <span class="coming-soon">Em breve</span>
             </span>
-            <strong class="plan-price">A definir</strong>
+              <strong class="plan-price">R$ 149 / ano</strong>
           </label>
-
-          <p class="notice">Ao concluir, seus dados serão enviados para a API. Nenhum pagamento será realizado nesta versão.</p>
         </section>
 
         <div class="form-footer">

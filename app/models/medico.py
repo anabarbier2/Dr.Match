@@ -1,4 +1,3 @@
-
 from django.db import models
 
 
@@ -23,6 +22,10 @@ class Medico(models.Model):
 
     # Plano escolhido
     plano = models.CharField(max_length=30)
+
+    # Médicos antigos continuam liberados.
+    # Novos cadastros serão criados como não liberados.
+    perfil_liberado = models.BooleanField(default=True)
 
     def __str__(self):
         return self.nome

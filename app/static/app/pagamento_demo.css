@@ -1,0 +1,246 @@
+/* CABEÇALHO */
+
+.payment-heading {
+    margin-bottom: 22px;
+}
+
+.payment-heading h1 {
+    margin: 0 0 7px;
+    color: var(--navy-dark);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 27px;
+    font-weight: 500;
+}
+
+.payment-heading p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* CARTÃO PRINCIPAL */
+
+.payment-card {
+    padding: 28px 30px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+}
+
+/* AVISO DE DEMONSTRAÇÃO */
+
+.demo-warning {
+    padding: 13px 15px;
+    margin: 20px 0;
+    border-radius: 9px;
+    background: #fff7df;
+    border: 1px solid #f3dfaa;
+    color: #795b19;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.demo-warning p {
+    margin: 5px 0 0;
+}
+
+/* RESUMO DO PLANO */
+
+.plan-summary {
+    padding: 20px;
+    margin: 22px 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #f8fafd;
+}
+
+.plan-summary small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.plan-summary h2 {
+    margin: 7px 0;
+    font-size: 17px;
+    color: var(--navy);
+}
+
+.price {
+    margin: 10px 0 0;
+    color: var(--navy);
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.price small {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+/* OPÇÕES DE PAGAMENTO */
+
+.payment-title {
+    margin: 25px 0 14px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 17px;
+    margin: 12px 0;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.payment-option:hover {
+    border-color: var(--navy);
+    background: #f8fafd;
+}
+
+.payment-option input {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    margin: 0;
+    accent-color: var(--navy);
+}
+
+.payment-option span {
+    display: block;
+}
+
+.payment-option strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+
+.payment-option small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* BOTÃO */
+
+.payment-button {
+    width: 100%;
+    margin-top: 18px;
+}
+
+/* RODAPÉ */
+
+.payment-footer {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #edf1f6;
+    color: var(--muted);
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* APROVAÇÃO */
+
+.payment-success {
+    padding: 15px 0;
+    text-align: center;
+}
+
+.payment-success .success-icon {
+    margin-bottom: 20px;
+}
+
+.payment-success h2 {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 23px;
+    font-weight: 500;
+}
+
+.payment-success .success-lead {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* ERRO */
+
+.payment-error {
+    padding: 13px;
+    margin: 15px 0;
+    border-radius: 9px;
+    background: #fff0ef;
+    color: var(--danger);
+    font-size: 13px;
+}
+
+/* BOTÃO DO PERFIL */
+
+.profile-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    margin-top: 18px;
+    padding: 0 24px;
+    border-radius: 12px;
+    background: var(--yellow);
+    color: var(--navy-dark);
+    font-weight: 700;
+}
+
+.profile-link:hover {
+    background: var(--yellow-dark);
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 520px) {
+    .payment-card {
+        padding: 22px 18px;
+    }
+
+    .payment-heading h1 {
+        font-size: 24px;
+    }
+}
+
+
+/* LOGO PADRÃO DR.MATCH */
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    color: var(--navy-dark);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.brand-icon,
+.brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--yellow-dark);
+    border-radius: 8px;
+    color: var(--navy);
+    font-family: Arial, sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.brand:hover {
+    color: var(--navy);
+}

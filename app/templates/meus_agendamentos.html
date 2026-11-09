@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus agendamentos | Dr.Match</title>
+    <link rel="stylesheet" href="{% static 'app/meus_agendamentos.css' %}">
+</head>
+<body>
+
+<main class="container">
+    <a href="/" class="voltar">← Página inicial</a>
+
+    <h1>Meus agendamentos</h1>
+    <p>Consulte suas solicitações e acompanhe o status das consultas.</p>
+
+    <section class="busca">
+        <h2>Localizar meus agendamentos</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="acao" value="buscar">
+
+            <label for="email">E-mail utilizado no agendamento</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="{{ email }}"
+                required
+            >
+
+            <label for="telefone">Telefone utilizado no agendamento</label>
+            <input
+                type="tel"
+                id="telefone"
+                name="telefone"
+                value="{{ telefone }}"
+                required
+            >
+
+            <button type="submit">Buscar agendamentos</button>
+        </form>
+    </section>
+
+    {% if mensagem %}
+        <p class="mensagem">{{ mensagem }}</p>
+    {% endif %}
+
+    {% for agendamento in agendamentos %}
+        <article class="agendamento">
+            <h2>{{ agendamento.medico.nome }}</h2>
+
+            <p><strong>Especialidade:</strong>
+                {{ agendamento.medico.especialidade }}
+            </p>
+
+            <p><strong>Data:</strong>
+                {{ agendamento.data|date:"d/m/Y" }}
+            </p>
+
+            <p><strong>Horário:</strong>
+                {{ agendamento.horario|time:"H:i" }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+
+                {% if agendamento.status == "PENDENTE" %}
+                    <span class="status pendente">Pré-agendado</span>
+                {% elif agendamento.status == "CONFIRMADO" %}
+                    <span class="status confirmado">Agendado</span>
+                {% else %}
+                    <span class="status cancelado">Cancelado</span>
+                {% endif %}
+            </p>
+
+            {% if agendamento.status == "PENDENTE" %}
+                <div class="contato">
+                    <p>Você já entrou em contato com o médico?</p>
+
+                    <div class="botoes">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="acao" value="confirmar">
+                            <input type="hidden" name="agendamento_id"
+                                   value="{{ agendamento.id }}">
+                            <input type="hidden" name="email" value="{{ email }}">
+                            <input type="hidden" name="telefone" value="{{ telefone }}">
+
+                            <button type="submit" class="sim">Sim</button>
+                        </form>
+
+                        <button
+                            type="button"
+                            class="nao"
+                            onclick="abrirModal('modal-{{ agendamento.id }}')">
+                            Não
+                        </button>
+                    </div>
+                </div>
+
+                <div id="modal-{{ agendamento.id }}" class="modal">
+                    <div class="modal-conteudo">
+                        <button
+                            type="button"
+                            class="fechar"
+                            aria-label="Fechar janela"
+                            onclick="fecharModal('modal-{{ agendamento.id }}')">
+                            ×
+                        </button>
+
+                        <h2>Entre em contato com o médico</h2>
+
+                        <p><strong>Telefone:</strong>
+                            {{ agendamento.medico.telefone }}
+                        </p>
+
+                        <p><strong>E-mail:</strong>
+                            {{ agendamento.medico.email }}
+                        </p>
+
+                        <p class="aviso">
+                            Seu agendamento continua como pré-agendado.
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+        </article>
+    {% empty %}
+        {% if request.method == "POST" and not mensagem %}
+            <p>Nenhum agendamento encontrado.</p>
+        {% endif %}
+    {% endfor %}
+</main>
+
+<script>
+function abrirModal(id) {
+    document.getElementById(id).style.display = "flex";
+}
+
+function fecharModal(id) {
+    document.getElementById(id).style.display = "none";
+}
+
+document.querySelectorAll(".modal").forEach(function(modal) {
+    modal.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

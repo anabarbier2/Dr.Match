@@ -2,6 +2,7 @@
 import json
 from datetime import date, time
 
+from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError, transaction
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST
@@ -156,4 +157,73 @@ def pagina_agendamento(request):
         request,
         "agendamento.html",
         {"medico": medico},
+    )
+
+
+@require_http_methods(["GET", "POST"])
+def meus_agendamentos(request):
+    agendamentos = []
+    mensagem = ""
+    email = ""
+    telefone = ""
+
+    if request.method == "POST":
+        acao = request.POST.get("acao")
+
+        email = request.POST.get("email", "").strip()
+        telefone = request.POST.get("telefone", "").strip()
+
+        if acao == "buscar":
+            if not email or not telefone:
+                mensagem = "Informe seu e-mail e telefone."
+            else:
+                agendamentos = list(
+                    Agendamento.objects.filter(
+                        email_paciente__iexact=email,
+                        telefone_paciente=telefone
+                    ).select_related("medico")
+                )
+
+                if not agendamentos:
+                    mensagem = "Nenhum agendamento foi encontrado."
+
+        elif acao == "confirmar":
+            agendamento_id = request.POST.get("agendamento_id")
+
+            if not email or not telefone or not agendamento_id:
+                mensagem = "Não foi possível confirmar o agendamento."
+            else:
+                try:
+                    agendamento = Agendamento.objects.get(
+                        pk=agendamento_id,
+                        email_paciente__iexact=email,
+                        telefone_paciente=telefone,
+                    )
+
+                    if agendamento.status == Agendamento.STATUS_PENDENTE:
+                        agendamento.status = Agendamento.STATUS_CONFIRMADO
+                        agendamento.save(update_fields=["status"])
+                        mensagem = "Agendamento confirmado com sucesso!"
+                    else:
+                        mensagem = "Esse agendamento não está mais pendente."
+
+                except Agendamento.DoesNotExist:
+                    mensagem = "Agendamento não encontrado."
+
+                agendamentos = list(
+                    Agendamento.objects.filter(
+                        email_paciente__iexact=email,
+                        telefone_paciente=telefone
+                    ).select_related("medico")
+                )
+
+    return render(
+        request,
+        "meus_agendamentos.html",
+        {
+            "agendamentos": agendamentos,
+            "mensagem": mensagem,
+            "email": email,
+            "telefone": telefone,
+        }
     )

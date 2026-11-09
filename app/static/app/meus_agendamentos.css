@@ -1,0 +1,194 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f4f7fc;
+    color: #172b4d;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 90%;
+    max-width: 850px;
+    margin: 45px auto;
+}
+
+.voltar {
+    color: #315b9b;
+    text-decoration: none;
+}
+
+h1 {
+    margin-top: 25px;
+    font-size: 34px;
+}
+
+.busca,
+.agendamento {
+    background: white;
+    padding: 25px;
+    margin-top: 25px;
+    border-radius: 14px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d4deed;
+    border-radius: 8px;
+}
+
+button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.busca button {
+    margin-top: 18px;
+    background: #17345f;
+    color: white;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.pendente {
+    background: #fff0cf;
+    color: #8a5a00;
+}
+
+.confirmado {
+    background: #d8f5e3;
+    color: #176b39;
+}
+
+.cancelado {
+    background: #ffe0e0;
+    color: #a52a2a;
+}
+
+.contato {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #e5eaf2;
+}
+
+.botoes {
+    display: flex;
+    gap: 12px;
+}
+
+.sim {
+    background: #198754;
+    color: white;
+}
+
+.nao {
+    background: #e7edf6;
+    color: #17345f;
+}
+
+.mensagem {
+    margin-top: 20px;
+    color: #315b9b;
+    font-weight: bold;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 25, 50, 0.6);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal-conteudo {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+}
+
+.fechar {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: transparent;
+    font-size: 28px;
+}
+
+.aviso {
+    margin-top: 20px;
+    color: #8a5a00;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        margin: 25px auto;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+}
+
+
+
+/* LOGO PADRÃO DR.MATCH */
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    color: var(--navy-dark);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.brand-icon,
+.brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--yellow-dark);
+    border-radius: 8px;
+    color: var(--navy);
+    font-family: Arial, sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.brand:hover {
+    color: var(--navy);
+}

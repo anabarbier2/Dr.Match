@@ -1,3 +1,4 @@
+
 const formBusca = document.getElementById("formBusca");
 const campoNome = document.getElementById("busca");
 const campoEspecialidade = document.getElementById("especialidade");
@@ -10,10 +11,15 @@ async function buscarMedicos() {
     contador.textContent = "";
     mensagem.textContent = "Buscando médicos...";
 
+    const nome = campoNome.value.trim();
+    const especialidadeBusca = campoEspecialidade.value.trim();
+
     const parametros = new URLSearchParams({
-        busca: campoNome.value.trim(),
-        especialidade: campoEspecialidade.value.trim()
+        busca: nome,
+        especialidade: especialidadeBusca
     });
+
+    const pesquisando = Boolean(nome || especialidadeBusca);
 
     try {
         const resposta = await fetch(`/medicos/?${parametros.toString()}`);
@@ -36,14 +42,16 @@ async function buscarMedicos() {
             return;
         }
 
-        mensagem.textContent = "Confira os profissionais encontrados:";
+        mensagem.textContent = pesquisando
+            ? "Confira os profissionais encontrados:"
+            : "Conheça alguns dos profissionais cadastrados. Pesquise para encontrar outros médicos:";
 
         medicos.forEach((medico) => {
             const cartao = document.createElement("article");
             cartao.className = "medico-card";
 
-            const nome = document.createElement("h3");
-            nome.textContent = medico.nome;
+            const nomeMedico = document.createElement("h3");
+            nomeMedico.textContent = medico.nome;
 
             const especialidade = document.createElement("p");
             especialidade.className = "especialidade";
@@ -65,13 +73,14 @@ async function buscarMedicos() {
             convenio.className = "convenio";
             convenio.textContent =
                 `Convênio: ${medico.convenio || "Não informado"}`;
+
             const botaoAgendar = document.createElement("a");
             botaoAgendar.className = "button button-primary";
             botaoAgendar.textContent = "Agendar";
             botaoAgendar.href = `/medicos/${medico.id}/perfil/`;
 
             cartao.append(
-                nome,
+                nomeMedico,
                 especialidade,
                 crm,
                 email,
@@ -82,6 +91,7 @@ async function buscarMedicos() {
 
             resultados.appendChild(cartao);
         });
+
     } catch (erro) {
         mensagem.textContent =
             "Não foi possível carregar os médicos. Tente novamente.";

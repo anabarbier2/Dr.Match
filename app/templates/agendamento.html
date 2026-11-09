@@ -9,13 +9,14 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"defer></script>
     <title>Agendar consulta | Dr.Match</title>
     <link rel="stylesheet" href="{% static 'app/agendamento.css' %}">
+    <link rel="stylesheet" href="{% static 'app/logo.css' %}">
     <script src="{% static 'app/agendamento.js' %}" defer></script>
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="/" aria-label="Página inicial Dr.Match">
-        <span class="brand-icon" aria-hidden="true">+</span>
-        <span>Dr.Match</span>
+        <a class="brand" href="/" aria-label="Dr.Match página inicial">
+            <span class="brand-icon" aria-hidden="true">✚</span>
+            <span>Dr.Match</span>
         </a>
         <a href="/" class="back-link">Voltar ao início</a>
     </header>
@@ -55,7 +56,7 @@
                         <option value="">Carregando médicos...</option>
                     </select>
                 </div>
-                //<!-- não muda nada, mas deixa ai: -->
+                <!-- não muda nada, mas deixa ai: -->
                 <div class="field">
                     <div id="calendario"></div>
                     <input id="data" name="data" type="hidden" required>

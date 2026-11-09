@@ -84,3 +84,41 @@ h1,h2{font-family:'Playfair Display',Georgia,serif;font-weight:500;letter-spacin
 .footer-inner nav a:hover{color:white}
 @media(max-width:850px){.nav-wrap{gap:12px}.main-nav{gap:16px}.header-actions{gap:10px}.hero{gap:32px;min-height:auto;padding-top:65px;padding-bottom:70px}.hero h1{font-size:clamp(40px,6vw,54px)}.hero-description{font-size:16px}.doctor-photo{height:350px}.floating-badge{right:-7px}.steps-grid{gap:28px}.step-card p{font-size:14px}.plan-card{padding:25px}.featured{padding-top:55px}.popular-label{left:25px}.footer-inner{flex-wrap:wrap}.footer-inner p{order:3;width:100%;margin:0}}
 @media(max-width:640px){.site-header{height:62px}.nav-wrap{padding:0 18px}.brand{font-size:19px}.menu-toggle{display:block;margin-left:auto}.main-nav{display:none;position:absolute;top:61px;left:0;right:0;background:white;border-bottom:1px solid var(--line);padding:20px;flex-direction:column;align-items:flex-start;gap:18px}.main-nav.open{display:flex}.header-actions .search-link{display:none}.header-actions{margin-left:0}.button-small{padding:0 12px;font-size:12px;min-height:36px}.hero{grid-template-columns:1fr;padding-top:48px;gap:38px}.hero h1{font-size:clamp(42px,11vw,58px)}.hero-description{font-size:16px}.hero-actions{display:grid;grid-template-columns:1fr}.hero-actions .button{width:100%}.hero-visual{margin:0 5px}.doctor-photo{height:330px}.floating-badge{top:12px;right:-4px;padding:9px 10px}.doctor-card{left:10px;right:10px;bottom:10px;padding:10px;gap:8px}.doctor-avatar{width:40px;height:40px}.doctor-details strong,.next-appointment strong{font-size:11px}.doctor-details span,.next-appointment span{font-size:9px}.how-section,.plans-section{padding:68px 0}.how-section h2,.section-heading h2{font-size:30px}.steps-grid{grid-template-columns:1fr;gap:34px;margin-top:42px}.step-number{font-size:52px}.step-card h3{margin-top:12px}.step-card p{font-size:15px}.plans-grid{grid-template-columns:1fr;max-width:420px;margin-top:38px;gap:18px}.plan-card{min-height:0;padding:28px}.featured{padding-top:60px}.popular-label{left:28px}.price{font-size:42px}.cta-section{padding:68px 0}.cta-content h2{font-size:34px}.cta-content p{font-size:16px}.footer-inner{justify-content:center;text-align:center}.footer-inner p{order:0}.footer-inner nav{width:100%;justify-content:center;gap:18px}.footer-brand{width:100%;justify-content:center}}
+
+
+/* LOGO PADRÃO DR.MATCH */
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    color: var(--navy-dark);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.brand-icon,
+.brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--yellow-dark);
+    border-radius: 8px;
+    color: var(--navy);
+    font-family: Arial, sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.brand:hover {
+    color: var(--navy);
+}
